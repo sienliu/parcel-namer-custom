@@ -35,8 +35,13 @@ export default new Namer({
     if (bundle.filePath != null) {
       return bundle.filePath;
     }
-
-    const { filePath: bundlePath } = bundle.getMainEntry();
+    const mainEntry = bundle.getMainEntry();
+    
+    if (!mainEntry) {
+      return null;
+    }
+    
+    const { filePath: bundlePath } = mainEntry;
     const { projectRoot } = options;
     const pluginConfig = await getPluginConfig(projectRoot);
 
